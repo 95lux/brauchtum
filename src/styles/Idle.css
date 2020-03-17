@@ -1,0 +1,46 @@
+.indexWrap {
+    position: relative;
+    z-index: 10;
+}
+
+.fadein {
+    z-index: 5;
+    opacity: 0.5;
+    position:absolute;
+    top:0px;
+    left:0px;
+    margin:auto;
+}
+.fadein img {
+    position:absolute;
+    left:0px;
+    top:0;
+    animation-name: fade;
+    animation-iteration-count: infinite;
+    animation-duration: 40s;
+}
+
+@keyframes fade {
+    0% {opacity: 0;}
+      10% {opacity: 1;}
+      20% {opacity: 1;}
+      30% {opacity: 0;}
+      100% {opacity: 0;}
+}
+
+.f1 {
+    background-color: lightblue;
+    animation-delay: 0s;
+}
+.f2 {
+    animation-delay: -32s;
+}
+.f3 {
+    animation-delay: -24s;
+}
+.f4 {
+    animation-delay: -16s;
+}
+.f5 {
+    animation-delay: -8s;
+}

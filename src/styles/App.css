@@ -1,0 +1,120 @@
+@font-face {
+    font-family: sdmFont;
+    src:url("../assets/font/TransitPro.otf");
+}
+header {
+    overflow: auto;
+    height: 0px;
+    position: absolute;
+}
+body {
+    /* backface-visibility: hidden; */
+    /* transform: translateZ(0); */
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-family: sdmFont;
+    background-color: rgb(44, 46, 50);
+    color: rgb(242, 240, 255);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+    height: 100vh;
+    width: 100vw;
+    max-height: 100%;
+    max-width: 100%;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(242, 240, 255);
+}
+
+.page {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1216px;
+    height: 618px;
+}
+
+.container {
+    position: absolute;
+    top: 79px;
+    left: 50%;
+    height: 618px;
+    width: 1216px;
+    margin-left: -608px;
+    background-color: rgb(25, 27, 29);
+}
+
+
+.title {
+    position: absolute;
+    left:75px;
+    top: 15px;
+    border-style: solid;
+    border-color: rgb(242, 240, 255);
+    border-width: 2px;
+    color: rgb(242, 240, 255);
+    padding-top: 8px;
+    padding-bottom: 3px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight:normal;
+}
+
+.navBar {
+    transform-origin: top left;
+    position: absolute;
+    height: 59px;
+    left: 76px;
+    top: 700px;
+}
+
+.navButton {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+.navButtonFont {
+    margin-top: 3px;
+    width: 44px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.langBar {
+    transform-origin: top right;
+    /* transform: scale(0.6); */
+    position: absolute;
+    right: 75px;
+    top: 700px;
+}
+
+/* simple - enter transition 300ms, exit 150ms */
+.fade-appear,
+.fade-enter {
+    opacity: 0;
+    z-index: 1;
+}
+.fade-appear-active,
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease 150ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 150ms ease;
+}

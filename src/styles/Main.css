@@ -1,0 +1,29 @@
+.typ {
+    position: relative;
+    width: 120px;
+    height: 170px;
+    padding-bottom: 1px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(140, 25, 32);
+    display: table;
+}
+
+.thumbnail {
+    width: 120px;
+    height: 120px;
+    display: table-cell;
+}
+
+.text-container {
+    position: relative;
+    font-size: 18px;
+    width: 120px;
+    height: 50px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    /* box-sizing: border-box; */
+    border-top: solid 1px rgb(140, 25, 32);
+    background-color: rgb(55, 25, 31);
+}
