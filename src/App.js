@@ -16,7 +16,7 @@ import Rotate from './Components/Rotate'
 import Typ from './Components/Pages/Typ'
 import PreloadImages from './Components/PreloadImages'
 import CopyRights from './Components/Pages/CopyRights'
-import Information from './Components/Pages/Information'
+import Impressum from './Components/Pages/Impressum'
 
 import picDB from './db/pics.json'
 
@@ -118,7 +118,7 @@ export default function App() {
                                                     />
                                                 ))}
                                                 <Route path='/copyrights' component={CopyRights} />
-                                                <Route path='/information' component={Information} />
+                                                <Route path='/information' component={Impressum} />
                                             </Switch>
 
                                         </CSSTransition>
