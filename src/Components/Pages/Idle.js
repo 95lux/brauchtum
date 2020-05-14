@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import '../../styles/Idle.css';
 
-import animation from '../../assets/touchme/touchme.png';
+import animation from '../../assets/touchme/touchme.gif';
 import idle1 from '../../assets/idlemode/idlepic_1.png';
 import idle2 from '../../assets/idlemode/idlepic_2.png';
 import idle3 from '../../assets/idlemode/idlepic_3.png';
