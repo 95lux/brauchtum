@@ -118,7 +118,7 @@ export default function App() {
                                                     />
                                                 ))}
                                                 <Route path='/copyrights' component={CopyRights} />
-                                                <Route path='/information' component={Impressum} />
+                                                <Route path='/impressum' component={Impressum} />
                                             </Switch>
 
                                         </CSSTransition>

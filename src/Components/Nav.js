@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import '../styles/App.css'
 
-import navBarPic from '../assets/buttons/navbar.png'
 import homeButton from '../assets/buttons/home_pfad.svg'
 
 export default function Nav(props) {
@@ -26,9 +24,9 @@ export default function Nav(props) {
             <Link to='/main' onClick={e => handleClick(e, '/main')}>
                 <div style={currentPage==='/main' ? buttonStyleSelected : buttonStyle} className='navButton'><img src={homeButton} style={{height: '70%'}}/></div>
             </Link>
-            <Link to='/information' onClick={e => handleClick(e, '/information')}>
+            <Link to='/impressum' onClick={e => handleClick(e, '/impressum')}>
                 <div style={barStyle}></div>
-                <div style={currentPage==='/information' ? buttonStyleSelected : buttonStyle} className='navButton' ><div className='navButtonFont'>i</div></div>
+                <div style={currentPage==='/impressum' ? buttonStyleSelected : buttonStyle} className='navButton' ><div className='navButtonFont'>i</div></div>
             </Link>
             <Link to='/copyrights' onClick={e => handleClick(e, '/copyrights')}>
                 <div style={barStyle}></div>
@@ -44,7 +42,7 @@ const barStyle = {
     float: 'left',
     borderLeft: 'solid',
     borderWidth: '2px',
-    height: '30px',
+    height: '40px',
     marginRight: '-2px',
     top: '7px',
 }
@@ -71,8 +69,8 @@ const buttonStyle = {
     borderStyle: 'solid',
     borderWidth: '2px',
     borderColor: 'rgba(242, 240, 255, 0)',
-    width: '40px',
-    height: '40px',
+    width: '50px',
+    height: '50px',
     float: 'left',
     transition: 'border-color 300ms ease',
 }
@@ -81,8 +79,8 @@ const buttonStyleSelected = {
     borderStyle: 'solid',
     borderWidth: '2px',
     borderColor: 'rgba(242, 240, 255, 1)',
-    width: '40px',
-    height: '40px',
+    width: '50px',
+    height: '50px',
     float: 'left',
     transition: 'border-color 300ms ease',
 }

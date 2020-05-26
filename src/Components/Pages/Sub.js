@@ -6,13 +6,17 @@ import Audioplayer from '../Audioplayer'
 import SlideShow from '../SlideShow'
 import Main from '../Pages/Main'
 
-import closePopup from '../../assets/buttons/backarrow.png'
+import backArrow from '../../assets/buttons/backarrow.png'
 // var audioUrl = '../../audiofiles/Brauchtum_'
 var audioUrl = '/audiofiles/Brauchtum_'
 
 export default function Sub1(props) {
 
     const { t } = useTranslation();
+
+    const handleGoBack = () => {
+        props.history.goBack()
+    }
 
     return (
         <div className='page'>
@@ -33,27 +37,35 @@ export default function Sub1(props) {
                             sub={props.sub}/>
                     </div>
                 </div>
-                <Link to='/main'>
-                    <div style={closePopupWrapper}>
-                        <img style={imgStyle} src={closePopup}></img>
-                        <div style={textBackStyle}>{t('back')}</div>
+                <div style={navWrapper}>
+                    <div style={backWrapper} onTouchStart={() => handleGoBack()}>
+                            <img style={backArrowStyle} src={backArrow}></img>
+                            <div style={textBackStyle}>{t('back')}</div>
                     </div>
-                </Link>
+                </div>
+
             </div>
     );
 }
 
-const closePopupWrapper = {
+const backWrapper = {
     position: 'absolute',
-    bottom: '10px',
     left: '10px',
     height: '40px',
     width: '130px',
     borderStyle: 'solid',
     borderWidth: '1px',
     borderColor: 'rgb(140, 25, 32)',
-    display: 'table'
-    // boxSizing: 'border-box',
+    display: 'table',
+}
+
+const navWrapper = {
+    position: 'absolute',
+    width: '100%',
+    bottom: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+    height: '40px',
 }
 
 const textBackStyle = {
@@ -61,20 +73,24 @@ const textBackStyle = {
     left: '40px',
     height: '40px',
     width: '90px',
-    // borderLeft: 'solid',
     display: 'table-cell',
     textAlign: 'center',
+    textTransform: 'capitalize',
     verticalAlign: 'middle',
     boxSizing: 'border-box',
-    borderLeft: 'solid 1px rgb(140, 25, 32)',
-    backgroundColor: 'rgb(55, 25, 31)'
+    backgroundColor: 'rgb(55, 25, 31)',
+    padding: '10px',
+    paddingBottom: '0px',
+    paddingTop: '4px',
+    whiteSpace: 'nowrap',
 }
 
-const imgStyle = {
+const backArrowStyle = {
     height: '40px',
     width: '40px',
     objectFit: 'contain',
-    display: 'table-cell'
+    display: 'table-cell',
+    borderRight: 'solid 1px rgb(140, 25, 32)',
 }
 
 const linksStyle = {

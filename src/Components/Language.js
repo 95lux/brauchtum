@@ -37,33 +37,33 @@ const barStyle = {
     float: 'right',
     borderRight: 'solid',
     borderWidth: '2px',
-    height: '30px',
+    height: '40px',
     marginLeft: '-2px',
     top: '7px',
 }
 
-const imageWrapper = {
-    boxSizing: 'border-box',
-    // float: 'right',
-    position: 'absolute',
-    heigth: '50px',
-    width: '231px',
-    borderStyle: 'none',
-    textAlign: 'center',
-    // padding: '2px',
-    paddingTop: '4px',
-    overflow: 'hidden',
-    maxHeight: '77px',
-    textIndent: '8px'
-}
+// const imageWrapper = {
+//     boxSizing: 'border-box',
+//     // float: 'right',
+//     position: 'absolute',
+//     heigth: '50px',
+//     width: '231px',
+//     borderStyle: 'none',
+//     textAlign: 'center',
+//     // padding: '2px',
+//     paddingTop: '4px',
+//     overflow: 'hidden',
+//     maxHeight: '77px',
+//     textIndent: '8px'
+// }
 
 const buttonStyle = {
     marginLeft: '-2px',
     borderStyle: 'solid',
     borderWidth: '2px',
     borderColor: 'rgba(242, 240, 255, 0)',
-    width: '40px',
-    height: '40px',
+    width: '50px',
+    height: '50px',
     float: 'right',
     transition: 'border-color 300ms ease',
 }
@@ -72,8 +72,8 @@ const buttonStyleSelected = {
     borderStyle: 'solid',
     borderWidth: '2px',
     borderColor: 'rgba(242, 240, 255, 1)',
-    width: '40px',
-    height: '40px',
+    width: '50px',
+    height: '50px',
     float: 'right',
     transition: 'border-color 300ms ease',
 }

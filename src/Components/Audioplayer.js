@@ -11,27 +11,36 @@ class Audioplayer extends Component {
 
         this.player = new Audio()
         this.updateInterval = null
-
+        this.bar = React.createRef()
         this.state = {
-            playing: false,
+            playing: true,
             currentTime: 0,
             duration: 0,
             progressPercentage: 0,
             ppButtonPosition: 0,
-            metadataloaded: false
+            metadataloaded: false,
+            drag: false,
+            dragStart: 0,
+            xPos: 0,
+            touchEndBlocked: false
         }
         this.setAudioEvents()
+        this.player.autoplay = true
     }
 
     setAudioEvents() {
         this.player.addEventListener('loadeddata', () => {
             const { duration } = this.player
-            this.setState({ duration })
+            this.setState({
+                duration,
+                playing: true
+            })
         })
     }
 
     componentDidMount() {
         // declare src
+        console.log(this.props.track);
         this.player.src = this.props.track;
         // console.log(player.src.endsWith('none'))
         this.player.load();
@@ -39,10 +48,17 @@ class Audioplayer extends Component {
         this.updateInterval = setInterval(() => {
             this.formatTime('durationTC', this.state.duration);
             this.formatTime('currentTimeTC', this.state.currentTime);
-            this.setState({
-                currentTime: this.player.currentTime,
-                ppButtonPosition: this.progressFill.getBoundingClientRect().width-5
-                })
+            if (this.state.drag==true) {
+                this.setState({
+                    currentTime: this.player.currentTime,
+                    })
+            } else {
+                this.setState({
+                    currentTime: this.player.currentTime,
+                    ppButtonPosition: this.progressFill.getBoundingClientRect().width-5
+                    })
+            }
+
         }, 30);
     }
 
@@ -79,36 +95,91 @@ class Audioplayer extends Component {
         }
         // Audio End Event
         if(this.state.currentTime >= (this.state.duration-0.05)) {
-            this.setState( {playing: false})
-            // player.pause();
-            this.player.currentTime = 0;
+            this.stop()
+
         }
     }
 
     // Format time to TC
     formatTime = (state, decimal) => {
+        if (isNaN(decimal)) {
+            decimal = 0;
+        }
         let timeTC = new Date(0,0);
         timeTC.setSeconds(+decimal);
         let timeTCString = timeTC.toTimeString().slice(3, 8);
         this.setState({ [state]: timeTCString});
     }
 
-    handlePlayPause = (e) => {
-        e.target.addEventListener('touchstart', () => console.log('TEST'))
-        !this.state.playing ? this.play() : this.pause();
+    handleTouchStart = (e) => {
+        this.setState({
+            dragStart: e.touches[0].clientX
+        })
+        e.target.addEventListener('touchmove', e => this.handleDrag(e))
+        e.target.addEventListener('touchend', e => this.handleTouchEnd())
     }
 
-    // Handle Seek Userevent
-    handleSeek = (e) => {
+    handleDrag = (e) => {
+        this.setState({xPos: e.touches[0].clientX})
+        // wenn überdraggt wird
+        if (e.touches[0].clientX > this.bar.current.getBoundingClientRect().left + this.bar.current.clientWidth) {
+            this.setState({xPos: this.bar.current.getBoundingClientRect().left + this.bar.current.clientWidth})
+        }
+        // wenn unterdraggt wird
+        if (e.touches[0].clientX < this.bar.current.getBoundingClientRect().left) {
+            this.setState({xPos: this.bar.current.getBoundingClientRect().left})
+        }
+        let buttonPos = this.state.xPos - this.bar.current.getBoundingClientRect().left;
+        let negButtonPos = (this.state.xPos - this.bar.current.getBoundingClientRect().right)*-1
+        this.setState({
+            drag: true,
+            ppButtonPosition: this.props.isRotated ? negButtonPos : buttonPos
+        })
+        // e.target.addEventListener('touchend', () => {
+        //     this.setState({
+        //         drag: false
+        //     })
+        // })
+    }
+
+    handleTouchEnd = () => {
+
+        console.log('touchend');
+        if (this.state.drag) {
+            this.setState({
+                drag: false
+            })
+            this.handleSeek(this.state.xPos)
+        } else {
+            if(this.state.touchEndBlocked) return;
+            this.handlePlayPause()
+
+        }
+        this.setState({touchEndBlocked: true})
+        setTimeout(() => {
+            this.setState({touchEndBlocked: false})
+            console.log('touchendFree');
+        },100)
+    }
+
+    handlePlayPause = () => {
+            !this.state.playing ? this.play() : this.pause()
+    }
+
+    clickSeek = (e) => {
+        this.handleSeek(e.pageX)
+    }
+
+    handleSeek = (pos) => {
+        console.log('seeeek');
         let clickPercentage;
         if(!this.props.isRotated) {
-            clickPercentage = (e.pageX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width;
+            clickPercentage = (pos - this.bar.current.getBoundingClientRect().left) / this.bar.current.clientWidth;
         } else {
-            clickPercentage = (e.pageX - e.target.getBoundingClientRect().right)*-1 / e.target.getBoundingClientRect().width;
+            clickPercentage = (pos - this.bar.current.getBoundingClientRect().right)*-1 / this.bar.current.clientWidth;
         }
         let newPosition = clickPercentage*this.state.duration
         this.player.currentTime = newPosition;
-        // player.currentTime = newPosition;
         this.setState({
             currentTime: newPosition,
         })
@@ -122,13 +193,19 @@ class Audioplayer extends Component {
         this.setState( {playing: false} )
         this.player.pause()
     }
+
+    stop = () => {
+        this.setState( {playing: false})
+        this.player.pause();
+        this.player.currentTime = 0;
+    }
     render() {
         // dynamic styles
         const progressBarFillStyle = {
             position: 'absolute',
-            top: '6px',
+            top: '5px',
             width: `${this.state.currentTime/this.state.duration*100}%`,
-            height: '5px',
+            height: '8px',
             backgroundColor: 'grey',
             pointerEvents: 'none',
         }
@@ -136,27 +213,27 @@ class Audioplayer extends Component {
         const ppButtonStyle = {
             zIndex: '1',
             position: 'absolute',
-            bottom: '-2px',
-            width: '25px',
-            height: '25px',
-            // opacity: '0.5',
-            // objectFit: 'contain',
+            bottom: '-10px',
+            width: '40px',
+            height: '40px',
             left: `${this.state.ppButtonPosition}px`,
         }
 
         return (
             <div className='playerContainer'>
-                <div style={playerBarContainer}>
-                <div style={ppButtonStyle} onTouchStart={e => this.handlePlayPause(e)}>
-                    {this.state.playing === true && (
+                <div style={playerBarContainer} ref={this.bar}>
+                <div style={ppButtonStyle} onTouchStart={e => this.handleTouchStart(e)}>
+                    {/* {this.state.playing === true && (
                         <img src={pauseButton} style={imgStyle}></img>
                     )}
                     {this.state.playing === false && (
                         <img src={playButton} style={imgStyle}></img>
-                    )}
+                    )} */}
+                    <img src={playButton} style={imgStyle}></img>
+                        <img src={pauseButton} style={this.state.playing ? shown: hidden}></img>
                 </div>
                     <div
-                        onClick={e => this.handleSeek(e)}
+                        onClick={e => this.clickSeek(e)}
                         style={progressBarStyle}
                         ref={ref => this.progressBar = ref}
                     >
@@ -179,12 +256,28 @@ class Audioplayer extends Component {
 const imgStyle = {
     maxHeight: '100%',
     maxWidth: '100%',
-    objectFit: 'contain'
+    objectFit: 'contain',
+    position: 'absolute'
+}
+const hidden = {
+    opacity: '0',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    objectFit: 'contain',
+    transition: 'opacity 0.5s',
+    position: 'absolute'
+}
+const shown = {
+    maxHeight: '100%',
+    maxWidth: '100%',
+    objectFit: 'contain',
+    transition: 'opacity 0.5s',
+    position: 'absolute'
 }
 
 const tcStyle = {
     position: 'absolute',
-    bottom: '10px',
+    bottom: '5px',
     left: '445px',
     fontVariantNumeric: 'tabular-nums'
 }
@@ -196,14 +289,14 @@ const playerContainer = {
 const playerBarContainer = {
     position: 'absolute',
     height: '10px',
-    bottom: '35px',
+    bottom: '40px',
     left: '30px',
     display: 'table'
 }
 
 const progressBarStyle = {
     width: '500px',
-    height: '2px',
+    height: '4px',
     backgroundColor: 'white',
     // display: 'table-cell',
     display: 'inline-block',
