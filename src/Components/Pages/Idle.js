@@ -62,17 +62,18 @@ const animStyle = {
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: '160px',
+    marginTop: '250px',
     width: '20%'
 }
 
 const fontStyle = {
-    marginTop: '50px',
+    marginTop: '90px',
     textAlign: 'center',
     textDecoration: 'none',
-    fontSize: '50px',
+    fontSize: '25px',
     fontWeight: 'normal',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontWeight: 'bold'
 }
 
 const linkStyle = {
