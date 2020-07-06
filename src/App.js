@@ -47,91 +47,101 @@ export default function App() {
     }
 
     const rotateViewZ = isRotated ? {
+        zIndex: '-10',
+        width: '1366px',
+        height: '768px',
         transform: 'rotate3d(1, 0, 0, 180deg) perspective(1px)',
-        transformOrigin: '683px 376px',
+        transformOrigin: '50% 50%',
         transition: 'transform 500ms ease',
     } : {
+        zIndex: '-10',
+        width: '1366px',
+        height: '768px',
         transition: 'transform 500ms ease',
-        transformOrigin: '683px 376px',
+        transformOrigin: '50% 50%',
     }
 
     const rotateViewY = isRotated ? {
+        zIndex: '-10',
+        width: '1366px',
+        height: '768px',
         transform: 'rotateY(180deg) perspective(1px)',
-        transformOrigin: '683px 376px',
+        transformOrigin: '50% 50%',
         transition: 'transform 250ms ease',
         transitionDelay: '100ms',
     } : {
+        zIndex: '-10',
+        width: '1366px',
+        height: '768px',
         transition: 'transform 250ms ease',
         transitionDelay: '100ms',
-        transformOrigin: '683px 376px',
     }
 
     return (
-
             <Suspense fallback={<Loader />}>
-                <div style={rotateViewZ}>
-                    <div style={rotateViewY}>
-                        <Title/>
-                        <Router>
-                        {/* <IdleFunction/> */}
-                            <div className='container'>
-                                <Route render={({location}) =>
-                                    <TransitionGroup>
-                                        <CSSTransition
-                                            key={location.key}
-                                            timeout={300}
-                                            classNames='fade'
-                                        >
-                                            <Switch location={location}>
-                                                <Route path='/'exact component={Idle} />
-                                                {/* <Route path='/main' component={Main} /> */}
-                                                <Route
-                                                  path='/main'
-                                                  render={(props) =>
-                                                    <Main
-                                                      elements={typRoutes}/>}
-                                                />
+              <div style={rotateViewZ}>
+                  <div style={rotateViewY}>
+                      <Title/>
+                      <Router>
+                      {/* <IdleFunction/> */}
+                          <div className='container'>
+                              <Route render={({location}) =>
+                                  <TransitionGroup>
+                                      <CSSTransition
+                                          key={location.key}
+                                          timeout={300}
+                                          classNames='fade'
+                                      >
+                                          <Switch location={location}>
+                                              <Route path='/'exact component={Idle} />
+                                              {/* <Route path='/main' component={Main} /> */}
+                                              <Route
+                                                path='/main'
+                                                render={(props) =>
+                                                  <Main
+                                                    elements={typRoutes}/>}
+                                              />
 
-                                                {subRoutes.map(subRoute => (
-                                                    <Route
-                                                      key={`/sub${subRoute}`}
-                                                      path={`/sub${subRoute}`}
-                                                      render={(props) =>
-                                                        <Sub {...props}
-                                                          sub={subRoute}
-                                                          isRotated={isRotated}
-                                                          types={typRoutes}
-                                                        />}
-                                                    />
-                                                ))}
-                                                {typRoutes.map(typRoute => (
-                                                    <Route
-                                                      key={`/typ${typRoute}`}
-                                                      path={`/typ${typRoute}`}
-                                                      render={(props) =>
-                                                        <Typ {...props}
-                                                          typ={typRoute}
-                                                          types={typRoutes}
-                                                          subs={subRoutes.filter(route => route.slice(0, route.indexOf('-')) === typRoute )}
-                                                          isRotated={isRotated}
-                                                        />}
-                                                    />
-                                                ))}
-                                                <Route path='/copyrights' component={CopyRights} />
-                                                <Route path='/impressum' component={Impressum} />
-                                            </Switch>
+                                              {subRoutes.map(subRoute => (
+                                                  <Route
+                                                    key={`/sub${subRoute}`}
+                                                    path={`/sub${subRoute}`}
+                                                    render={(props) =>
+                                                      <Sub {...props}
+                                                        sub={subRoute}
+                                                        isRotated={isRotated}
+                                                        types={typRoutes}
+                                                      />}
+                                                  />
+                                              ))}
+                                              {typRoutes.map(typRoute => (
+                                                  <Route
+                                                    key={`/typ${typRoute}`}
+                                                    path={`/typ${typRoute}`}
+                                                    render={(props) =>
+                                                      <Typ {...props}
+                                                        typ={typRoute}
+                                                        types={typRoutes}
+                                                        subs={subRoutes.filter(route => route.slice(0, route.indexOf('-')) === typRoute )}
+                                                        isRotated={isRotated}
+                                                      />}
+                                                  />
+                                              ))}
+                                              <Route path='/copyrights' component={CopyRights} />
+                                              <Route path='/impressum' component={Impressum} />
+                                          </Switch>
 
-                                        </CSSTransition>
-                                    </TransitionGroup>
-                                }/>
+                                      </CSSTransition>
+                                  </TransitionGroup>
+                              }/>
 
-                            </div>
-                            <Nav/>
-                        </Router>
-                        <Rotate toggleRotate={toggleRotate}/>
-                        <Language />
-                    </div>
-                </div>
+                          </div>
+                          <Nav/>
+                      </Router>
+                      <Rotate toggleRotate={toggleRotate}/>
+                      <Language />
+                  </div>
+              </div>
             </Suspense>
     );
 }

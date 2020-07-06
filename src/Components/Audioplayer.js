@@ -33,8 +33,9 @@ class Audioplayer extends Component {
             const { duration } = this.player
             this.setState({
                 duration,
-                playing: true
+                playing: false
             })
+            this.play()
         })
     }
 
@@ -67,7 +68,10 @@ class Audioplayer extends Component {
                 if (isNaN(this.player.duration)) {
                     reject();
                 } else {
-                    this.player.onloadedmetadata = () => resolve();
+                    this.player.onloadedmetadata = () => {
+                      this.play()
+                      resolve();
+                    }
                 }
         });
     }
@@ -221,6 +225,7 @@ class Audioplayer extends Component {
 
         return (
             <div className='playerContainer'>
+              {/* <iframe src="/audiofiles/silence.mp3" type="audio/mp3" allow="autoplay" id="audio" style={{display: 'none'}}></iframe> */}
                 <div style={playerBarContainer} ref={this.bar}>
                 <div style={ppButtonStyle} onTouchStart={e => this.handleTouchStart(e)}>
                     {/* {this.state.playing === true && (
