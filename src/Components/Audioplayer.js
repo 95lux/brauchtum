@@ -22,7 +22,8 @@ class Audioplayer extends Component {
             drag: false,
             dragStart: 0,
             xPos: 0,
-            touchEndBlocked: false
+            touchEndBlocked: false,
+            lockTransport: false
         }
         this.setAudioEvents()
         this.player.autoplay = true
@@ -117,13 +118,16 @@ class Audioplayer extends Component {
 
     handleTouchStart = (e) => {
         this.setState({
-            dragStart: e.touches[0].clientX
+            dragStart: e.touches[0].clientX,
         })
-        e.target.addEventListener('touchmove', e => this.handleDrag(e))
+
+        e.target.addEventListener('touchmove', e => this.handleTouchDrag(e))
         e.target.addEventListener('touchend', e => this.handleTouchEnd())
     }
 
-    handleDrag = (e) => {
+    handleTouchDrag = (e) => {
+        // let event
+        // e.type == 'mousemove' ? event = e : event = e.touches[0]
         this.setState({xPos: e.touches[0].clientX})
         // wenn überdraggt wird
         if (e.touches[0].clientX > this.bar.current.getBoundingClientRect().left + this.bar.current.clientWidth) {
@@ -147,8 +151,6 @@ class Audioplayer extends Component {
     }
 
     handleTouchEnd = () => {
-
-        console.log('touchend');
         if (this.state.drag) {
             this.setState({
                 drag: false
@@ -167,7 +169,16 @@ class Audioplayer extends Component {
     }
 
     handlePlayPause = () => {
-            !this.state.playing ? this.play() : this.pause()
+        if (this.state.lockTransport == true) return
+        this.setState({
+            lockTransport: true
+        })
+        setTimeout(() => {
+            this.setState({
+                lockTransport: false
+            })
+        }, 100)
+        !this.state.playing ? this.play() : this.pause()
     }
 
     clickSeek = (e) => {
@@ -227,15 +238,15 @@ class Audioplayer extends Component {
             <div className='playerContainer'>
               {/* <iframe src="/audiofiles/silence.mp3" type="audio/mp3" allow="autoplay" id="audio" style={{display: 'none'}}></iframe> */}
                 <div style={playerBarContainer} ref={this.bar}>
-                <div style={ppButtonStyle} onTouchStart={e => this.handleTouchStart(e)}>
+                <div style={ppButtonStyle} onTouchStart={e => this.handleTouchStart(e)} onClick={e => this.handlePlayPause(e)}>
                     {/* {this.state.playing === true && (
                         <img src={pauseButton} style={imgStyle}></img>
                     )}
                     {this.state.playing === false && (
                         <img src={playButton} style={imgStyle}></img>
                     )} */}
-                    <img src={playButton} style={imgStyle}></img>
-                        <img src={pauseButton} style={this.state.playing ? shown: hidden}></img>
+                    <img src={playButton} draggable="false" style={imgStyle}></img>
+                        <img src={pauseButton} draggable="false" style={this.state.playing ? shown: hidden}></img>
                 </div>
                     <div
                         onClick={e => this.clickSeek(e)}
@@ -262,7 +273,8 @@ const imgStyle = {
     maxHeight: '100%',
     maxWidth: '100%',
     objectFit: 'contain',
-    position: 'absolute'
+    position: 'absolute',
+    userDrag: 'none'
 }
 const hidden = {
     opacity: '0',

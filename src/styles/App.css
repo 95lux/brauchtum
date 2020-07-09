@@ -17,13 +17,15 @@ body {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
-    height: 100vh;
-    width: 100vw;
-    max-height: 100%;
-    max-width: 100%;
-    margin: 0px;
+
+    position: absolute;
+    margin: auto;
     touch-action: none;
     overflow: hidden;
+    height: 768px;
+    width: 1366px;
+    max-height: 768px;
+    max-width: 1366px;
 }
 
 a {

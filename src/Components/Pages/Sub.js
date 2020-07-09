@@ -38,7 +38,7 @@ export default function Sub1(props) {
                     </div>
                 </div>
                 <div style={navWrapper}>
-                    <div style={backWrapper} onTouchStart={() => handleGoBack()}>
+                    <div style={backWrapper} onClick={() => handleGoBack()}>
                             <img style={backArrowStyle} src={backArrow}></img>
                             <div style={textBackStyle}>{t('back')}</div>
                     </div>
