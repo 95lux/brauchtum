@@ -62,7 +62,7 @@ class SlideShow extends Component {
                 <div style={containerStyle}>
                     {/* <img onTouchStart={() => this.handleImgChange('prev')} src={prevButton} style={buttonStyle}></img> */}
                     {this.state.index == 0 ?
-                        <div style={buttonStyle}/> : <img onTouchStart={() => this.handleImgChange('prev')} src={prevButton} style={buttonStyle}></img>
+                        <div style={buttonStyle}/> : <img onClick={() => this.handleImgChange('prev')} src={prevButton} style={buttonStyle}></img>
                     }
                     <div style={imgWrapper}>
                         <TransitionGroup >
@@ -86,7 +86,7 @@ class SlideShow extends Component {
                         </TransitionGroup>
                     </div>
                     {this.state.index >= this.state.pics.length -1 ?
-                        <div style={buttonStyle}/> : <img onTouchStart={() => this.handleImgChange('next')} src={nextButton} style={buttonStyle}></img>
+                        <div style={buttonStyle}/> : <img onClick={() => this.handleImgChange('next')} src={nextButton} style={buttonStyle}></img>
 
                     }
                 </div>

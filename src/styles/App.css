@@ -17,8 +17,6 @@ body {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
-
-    position: absolute;
     margin: auto;
     touch-action: none;
     overflow: hidden;
@@ -26,6 +24,7 @@ body {
     width: 1366px;
     max-height: 768px;
     max-width: 1366px;
+    position: absolute;
 }
 
 a {
