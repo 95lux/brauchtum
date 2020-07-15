@@ -51,7 +51,7 @@ class Impressum extends React.Component{
         return (
             <div className="page">
                 <div style={containerStyle} >
-                    <h1 style={titleStyle}> Quellen </h1>
+                    <h1 style={titleStyle}>{t('impressum')}</h1>
                         <ScrollArea
                             // className={this.props.isRotated ? "area rotate" : "area"}
                             className={this.props.isRotated ? "scrollarea rotate" : "scrollarea"}
