@@ -13,7 +13,6 @@ import idle5 from '../../assets/idlemode/idlepic_5.png';
 
 var idleTimer = null;
 
-
 export default function Idle(props) {
 
     const { t } = useTranslation();
