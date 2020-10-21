@@ -61,35 +61,33 @@ class SlideShow extends Component {
         return(
                 <div style={containerStyle}>
                     {/* <img onTouchStart={() => this.handleImgChange('prev')} src={prevButton} style={buttonStyle}></img> */}
-                    {this.state.index == 0 ?
-                        <div style={buttonStyle}/> : <img onClick={() => this.handleImgChange('prev')} src={prevButton} style={buttonStyle}></img>
+                    {this.state.index === 0 ?
+                        <div style={buttonStyleLeft}/> : <img onClick={() => this.handleImgChange('prev')} src={prevButton} style={buttonStyleLeft}></img>
                     }
-                    <div style={imgWrapper}>
                         <TransitionGroup >
                             <CSSTransition
                                 key={this.state.pic}
                                 timeout={300}
                                 classNames='picfade'
                             >
-                                {/* <img
+                                <img
                                     src={`/bilder/${this.state.pic}`}
                                     key={this.state.pic}
-                                    className='img'
-                                /> */}
-                                <object
+                                    style={img}
+                                />
+                                {/* <object
                                     data={`/bilder/${this.state.pic}`}
                                     type={'image/jpg'}
                                     key={this.state.pic}
                                     className='img'
-                                />
+                                /> */}
                             </CSSTransition>
                         </TransitionGroup>
-                    </div>
-                    {this.state.index >= this.state.pics.length -1 ?
-                        <div style={buttonStyle}/> : <img onClick={() => this.handleImgChange('next')} src={nextButton} style={buttonStyle}></img>
+                        {this.state.index >= this.state.pics.length -1 ?
+                        <div style={buttonStyleRight}/> : <img onClick={() => this.handleImgChange('next')} src={nextButton} style={buttonStyleRight}></img>
 
                     }
-                </div>
+                    </div>
         );
     }
 }
@@ -104,7 +102,35 @@ const imgWrapper = {
     // float: 'left'
     // margin: 'auto'
 }
-const buttonStyle = {
+const img = {
+    maxWidth: '380px',
+    maxHeight: '380px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: 'rgb(242, 240, 255)',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translateX(-50%) translateY(-50%)',
+    // transform: 'translateY(-50%)',
+}
+
+const buttonStyleLeft = {
+    position: 'absolute',
+    transform: 'translateY(-50%)',
+    top: '50%',
+    left: '20px',
+    height: '40px',
+    width: '40px',
+    margin: '10px'
+    // marginTop: '344px'
+}
+
+const buttonStyleRight = {
+    position: 'absolute',
+    transform: 'translateY(-50%)',
+    top: '50%',
+    right: '20px',
     height: '40px',
     width: '40px',
     margin: '10px'
@@ -112,10 +138,10 @@ const buttonStyle = {
 }
 
 const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '100px',
+    position: 'relative',
+    width: '560px',
+    height: '500px',
+
 }
 
 export default SlideShow;
